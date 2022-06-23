@@ -6,6 +6,10 @@ import {
   useNavigate,
 } from 'react-router-dom';
 
+import Section from 'components/Section';
+import Button from 'components/Button';
+import { FaLongArrowAltLeft } from 'react-icons/fa';
+
 function MovieDetails() {
   const { movieId } = useParams();
   const location = useLocation();
@@ -15,20 +19,18 @@ function MovieDetails() {
     ? { ...location.state.from }
     : { ...location, pathname: '/' };
 
+  function goBack() {
+    navigate(prevLocation.pathname, {
+      state: { from: prevLocation },
+    });
+  }
+
   return (
-    <div>
-      MovieDetails page
-      <br />
-      <button
-        type="button"
-        onClick={() =>
-          navigate(prevLocation.pathname, {
-            state: { from: prevLocation },
-          })
-        }
-      >
+    <Section title="Movie details">
+      <Button type="button" onClick={goBack}>
+        <FaLongArrowAltLeft />
         Go back
-      </button>
+      </Button>
       <p>
         Move id: <b>{movieId}</b>
       </p>
@@ -45,7 +47,7 @@ function MovieDetails() {
         </li>
       </ul>
       <Outlet />
-    </div>
+    </Section>
   );
 }
 

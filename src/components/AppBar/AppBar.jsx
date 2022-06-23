@@ -1,13 +1,19 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
-import { Container } from './AppBar.styled';
+import { Container, NavigationList, NavLinkStyled } from './AppBar.styled';
 
 const AppBar = () => {
   return (
     <Container>
       <nav>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="movies">Movies</NavLink>
+        <NavigationList>
+          <li>
+            <NavLinkStyled to="/">Home</NavLinkStyled>
+          </li>
+          <li>
+            <NavLinkStyled to="movies">Movies</NavLinkStyled>
+          </li>
+        </NavigationList>
       </nav>
 
       <Outlet />

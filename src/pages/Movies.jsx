@@ -1,17 +1,26 @@
 import { useEffect } from 'react';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
+
+import Section from 'components/Section';
+import ItemList from 'components/ItemList';
+import SearchForm from 'components/SearchForm';
+
+const items = Array(4)
+  .fill(null)
+  .map((_, index) => ({
+    key: index,
+    toLink: `${index}`,
+    label: `Movie ${index}`,
+  }));
 
 function Movies() {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  let prevQuery = searchParams.get('query') ?? '';
-
-  if (prevQuery === '') {
-    prevQuery = location.state?.from.search
-      ? new URLSearchParams(location.state.from.search).get('query')
-      : '';
-  }
+  const prevQuery =
+    searchParams.get('query') ??
+    new URLSearchParams(location.state?.from.search).get('query') ??
+    '';
 
   useEffect(() => {
     if (prevQuery === '') {
@@ -28,33 +37,13 @@ function Movies() {
   }
 
   return (
-    <div>
-      Movies page
-      <form onSubmit={onSubmit}>
-        <label>
-          Find:
-          <input
-            type="text"
-            name="query"
-            placeholder="Search query"
-            defaultValue={prevQuery}
-            required
-          />
-        </label>
-        <button type="submit">Search</button>
-      </form>
-      <ul>
-        {Array(4)
-          .fill(null)
-          .map((_, index) => (
-            <li key={index}>
-              <Link to={`${index}`} state={{ from: location }}>
-                Movie {index}
-              </Link>
-            </li>
-          ))}
-      </ul>
-    </div>
+    <Section title="Find movies">
+      <SearchForm onSubmit={onSubmit} defValue={prevQuery} />
+
+      {items.length > 0 && (
+        <ItemList items={items} state={{ from: location }} />
+      )}
+    </Section>
   );
 }
 

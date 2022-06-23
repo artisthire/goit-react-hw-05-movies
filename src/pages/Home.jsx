@@ -1,19 +1,19 @@
-import { Link } from 'react-router-dom';
+import Section from 'components/Section';
+import ItemList from 'components/ItemList';
+
+const items = Array(4)
+  .fill(null)
+  .map((_, index) => ({
+    key: index,
+    toLink: `movies/${index}`,
+    label: `Movie ${index}`,
+  }));
 
 function Home() {
   return (
-    <div>
-      Home page
-      <ul>
-        {Array(4)
-          .fill(null)
-          .map((_, index) => (
-            <li key={index}>
-              <Link to={`movies/${index}`}>Movie {index}</Link>
-            </li>
-          ))}
-      </ul>
-    </div>
+    <Section title="Tranding today">
+      <ItemList items={items} />
+    </Section>
   );
 }
 
