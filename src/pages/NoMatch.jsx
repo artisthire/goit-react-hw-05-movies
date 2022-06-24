@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
+import Section from 'components/Section';
 
 function NoMatch() {
   return (
-    <div>
-      Page not found
+    <Section title="Page not found">
       <Link to="/">Back to homepage</Link>
-    </div>
+    </Section>
   );
 }
 

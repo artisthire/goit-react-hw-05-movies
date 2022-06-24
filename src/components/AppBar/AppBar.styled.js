@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
 
 export const Container = styled.div`
   margin-bottom: 15px;
@@ -17,22 +16,4 @@ export const NavigationList = styled.ul`
   margin: 0;
   padding: 0;
   list-style: none;
-`;
-
-export const NavLinkStyled = styled(NavLink)`
-  display: block;
-  padding: 8px 4px;
-  font-size: inherit;
-  text-decoration: none;
-  cursor: pointer;
-
-  &:hover,
-  &:focus {
-    text-decoration: underline;
-  }
-
-  &.active {
-    color: #ed118b;
-    text-decoration: underline;
-  }
 `;

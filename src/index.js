@@ -12,19 +12,17 @@ import Reviews from 'pages/Reviews';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <AppBar />
+  <BrowserRouter>
+    <AppBar />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="movies" element={<Movies />} />
-        <Route path="movies/:movieId" element={<MovieDetails />}>
-          <Route path="cast" element={<Cast />} />
-          <Route path="reviews" element={<Reviews />} />
-        </Route>
-        <Route path="*" element={<NoMatch />} />
-      </Routes>
-    </BrowserRouter>
-  </React.StrictMode>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="movies" element={<Movies />} />
+      <Route path="movies/:movieId" element={<MovieDetails />}>
+        <Route path="cast" element={<Cast />} />
+        <Route path="reviews" element={<Reviews />} />
+      </Route>
+      <Route path="*" element={<NoMatch />} />
+    </Routes>
+  </BrowserRouter>
 );

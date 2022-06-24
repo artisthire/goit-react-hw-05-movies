@@ -1,18 +1,23 @@
+import { useEffect, useState } from 'react';
+import { fetchAllMovies, transfromResponse } from 'services/api';
+
 import Section from 'components/Section';
 import ItemList from 'components/ItemList';
 
-const items = Array(4)
-  .fill(null)
-  .map((_, index) => ({
-    key: index,
-    toLink: `movies/${index}`,
-    label: `Movie ${index}`,
-  }));
-
 function Home() {
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const data = await fetchAllMovies();
+      const transformData = transfromResponse(data, 'movies/');
+      setMovies(transformData);
+    })();
+  }, []);
+
   return (
     <Section title="Tranding today">
-      <ItemList items={items} />
+      <ItemList items={movies} />
     </Section>
   );
 }

@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
-import { Container, NavigationList, NavLinkStyled } from './AppBar.styled';
+import NavigationLink from 'components/NavigationLink';
+import { Container, NavigationList } from './AppBar.styled';
 
 const AppBar = () => {
   return (
@@ -8,10 +9,10 @@ const AppBar = () => {
       <nav>
         <NavigationList>
           <li>
-            <NavLinkStyled to="/">Home</NavLinkStyled>
+            <NavigationLink to="/" label="Home" />
           </li>
           <li>
-            <NavLinkStyled to="movies">Movies</NavLinkStyled>
+            <NavigationLink to="movies" label="Movies" />
           </li>
         </NavigationList>
       </nav>

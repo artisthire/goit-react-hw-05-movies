@@ -1,19 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
+import { fetchFilteredMovies, transfromResponse } from 'services/api';
 
 import Section from 'components/Section';
 import ItemList from 'components/ItemList';
 import SearchForm from 'components/SearchForm';
 
-const items = Array(4)
-  .fill(null)
-  .map((_, index) => ({
-    key: index,
-    toLink: `${index}`,
-    label: `Movie ${index}`,
-  }));
-
 function Movies() {
+  const [movies, setMovies] = useState([]);
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -28,6 +22,12 @@ function Movies() {
     }
 
     setSearchParams({ query: prevQuery });
+
+    (async () => {
+      const filterMovies = await fetchFilteredMovies(prevQuery);
+      const transformData = transfromResponse(filterMovies);
+      setMovies(transformData);
+    })();
   }, [prevQuery, setSearchParams]);
 
   function onSubmit(evt) {
@@ -40,8 +40,12 @@ function Movies() {
     <Section title="Find movies">
       <SearchForm onSubmit={onSubmit} defValue={prevQuery} />
 
-      {items.length > 0 && (
-        <ItemList items={items} state={{ from: location }} />
+      {movies.length > 0 && (
+        <ItemList items={movies} state={{ from: location }} />
+      )}
+
+      {!movies.length && prevQuery !== '' && (
+        <p>Not found for request: "{prevQuery}"</p>
       )}
     </Section>
   );
