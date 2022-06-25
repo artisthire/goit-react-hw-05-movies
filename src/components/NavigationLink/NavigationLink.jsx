@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { NavLinkStyled } from './NavigationLink.styled';
 
 function NavigationLink({ to, label, ...restProps }) {
@@ -7,5 +8,10 @@ function NavigationLink({ to, label, ...restProps }) {
     </NavLinkStyled>
   );
 }
+
+NavigationLink.propTypes = {
+  to: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+};
 
 export default NavigationLink;

@@ -1,7 +1,8 @@
+import PropTypes from 'prop-types';
+import { IMG_URL_BASE } from 'services/api';
 import { Container, Title, SubTitle, Text } from './MovieCard.styled';
 
 function MovieCard({ movie }) {
-  const posterImgURLBase = 'https://image.tmdb.org/t/p/w500';
   const {
     poster_path: posterImg,
     title,
@@ -16,7 +17,7 @@ function MovieCard({ movie }) {
 
   return (
     <Container>
-      <img src={`${posterImgURLBase}/${posterImg}`} alt={`${title}`} />
+      <img src={`${IMG_URL_BASE}/${posterImg}`} alt={`${title}`} />
 
       <div>
         <Title>{title}</Title>
@@ -29,5 +30,17 @@ function MovieCard({ movie }) {
     </Container>
   );
 }
+
+MovieCard.propTypes = {
+  movie: PropTypes.shape({
+    poster_path: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    overview: PropTypes.string.isRequired,
+    vote_average: PropTypes.number.isRequired,
+    genres: PropTypes.arrayOf(
+      PropTypes.shape({ name: PropTypes.string.isRequired })
+    ).isRequired,
+  }),
+};
 
 export default MovieCard;

@@ -24,6 +24,11 @@ export async function fetchFilteredMovies(query) {
       query,
     },
   });
+
+  if (data.results.length === 0) {
+    throw new Error(`Not found for request: "${query}"`);
+  }
+
   return data.results;
 }
 
@@ -45,6 +50,11 @@ export async function fetchMovieReviews(moveID) {
   const { data } = await axiosInstance({
     url: `/movie/${moveID}/reviews`,
   });
+
+  if (data.results.length === 0) {
+    throw new Error('We don`t have any reviews for this movie');
+  }
+
   return data.results;
 }
 
@@ -55,3 +65,5 @@ export function transfromResponse(items, baseURL = '') {
     toLink: `${baseURL}${item.id}`,
   }));
 }
+
+export const IMG_URL_BASE = 'https://image.tmdb.org/t/p/w500';

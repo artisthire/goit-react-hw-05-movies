@@ -1,38 +1,44 @@
-import { useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { fetchFilteredMovies, transfromResponse } from 'services/api';
 
+import useLoader from 'hooks/useLoader';
 import Section from 'components/Section';
 import ItemList from 'components/ItemList';
 import SearchForm from 'components/SearchForm';
 
 function Movies() {
-  const [movies, setMovies] = useState([]);
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-
   const prevQuery =
     searchParams.get('query') ??
     new URLSearchParams(location.state?.from.search).get('query') ??
     '';
 
-  useEffect(() => {
+  const fetch = useCallback(async () => {
     if (prevQuery === '') {
-      return;
+      return [];
     }
 
     setSearchParams({ query: prevQuery });
-
-    (async () => {
-      const filterMovies = await fetchFilteredMovies(prevQuery);
-      const transformData = transfromResponse(filterMovies);
-      setMovies(transformData);
-    })();
+    return fetchFilteredMovies(prevQuery);
   }, [prevQuery, setSearchParams]);
+
+  let { data, isLoaded, Loader } = useLoader({
+    callback: fetch,
+    initData: [],
+  });
+
+  data = transfromResponse(data);
 
   function onSubmit(evt) {
     evt.preventDefault();
     const query = evt.currentTarget.elements.query.value;
+
+    if (searchParams.get('query') === query) {
+      return;
+    }
+
     setSearchParams({ query });
   }
 
@@ -40,13 +46,9 @@ function Movies() {
     <Section title="Find movies">
       <SearchForm onSubmit={onSubmit} defValue={prevQuery} />
 
-      {movies.length > 0 && (
-        <ItemList items={movies} state={{ from: location }} />
-      )}
+      {isLoaded && <ItemList items={data} state={{ from: location }} />}
 
-      {!movies.length && prevQuery !== '' && (
-        <p>Not found for request: "{prevQuery}"</p>
-      )}
+      <Loader />
     </Section>
   );
 }

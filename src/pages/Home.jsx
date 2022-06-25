@@ -1,23 +1,22 @@
-import { useEffect, useState } from 'react';
 import { fetchAllMovies, transfromResponse } from 'services/api';
 
+import useLoader from 'hooks/useLoader';
 import Section from 'components/Section';
 import ItemList from 'components/ItemList';
 
 function Home() {
-  const [movies, setMovies] = useState([]);
+  let { data, isLoaded, Loader } = useLoader({
+    callback: fetchAllMovies,
+    initData: [],
+  });
 
-  useEffect(() => {
-    (async () => {
-      const data = await fetchAllMovies();
-      const transformData = transfromResponse(data, 'movies/');
-      setMovies(transformData);
-    })();
-  }, []);
+  data = transfromResponse(data, 'movies/');
 
   return (
     <Section title="Tranding today">
-      <ItemList items={movies} />
+      {isLoaded && <ItemList items={data} />}
+
+      <Loader />
     </Section>
   );
 }

@@ -1,25 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchMovieReviews } from 'services/api';
+import useLoader from 'hooks/useLoader';
 import Section from 'components/Section';
 
 function Reviews() {
   const { movieId } = useParams();
-  const [reviews, setReviews] = useState([]);
 
-  useEffect(() => {
-    (async () => {
-      const reviews = await fetchMovieReviews(movieId);
-      setReviews(reviews);
-    })();
-  }, [movieId]);
+  const fetch = useCallback(async () => fetchMovieReviews(movieId), [movieId]);
+
+  const { data, isLoaded, Loader } = useLoader({
+    callback: fetch,
+    initData: [],
+  });
 
   return (
     <Section>
-      {!reviews.length && <p>We don`t have any reviews for this movie</p>}
-      {reviews.length > 0 && (
+      {isLoaded && (
         <ul>
-          {reviews.map(review => (
+          {data.map(review => (
             <li key={review.id}>
               <h4>Author: {review.author}</h4>
               <p>{review.content}</p>
@@ -27,6 +26,7 @@ function Reviews() {
           ))}
         </ul>
       )}
+      <Loader />
     </Section>
   );
 }

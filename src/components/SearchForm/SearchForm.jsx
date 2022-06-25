@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { Form, Label, Input, SubmitBtn } from './SearchForm.styled';
 
@@ -20,5 +21,10 @@ function SearchForm({ onSubmit, defValue }) {
     </Form>
   );
 }
+
+SearchForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  defValue: PropTypes.string.isRequired,
+};
 
 export default SearchForm;

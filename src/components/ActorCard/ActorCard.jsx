@@ -1,16 +1,13 @@
+import PropTypes from 'prop-types';
 import noPhotoImg from './assets/no-photo.png';
+import { IMG_URL_BASE } from 'services/api';
 import { Container } from './ActorCard.styled';
-
-const posterImgURLBase = 'https://image.tmdb.org/t/p/w500';
 
 function ActorCard({ actor }) {
   return (
     <Container key={actor.id}>
       {actor.profile_path && (
-        <img
-          src={`${posterImgURLBase}/${actor.profile_path}`}
-          alt={actor.name}
-        />
+        <img src={`${IMG_URL_BASE}/${actor.profile_path}`} alt={actor.name} />
       )}
       {!actor.profile_path && <img src={noPhotoImg} alt="" />}
       <div>
@@ -20,5 +17,14 @@ function ActorCard({ actor }) {
     </Container>
   );
 }
+
+ActorCard.propTypes = {
+  actor: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    profile_path: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    character: PropTypes.string.isRequired,
+  }),
+};
 
 export default ActorCard;

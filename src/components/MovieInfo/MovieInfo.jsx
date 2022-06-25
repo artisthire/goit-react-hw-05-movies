@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import MovieCard from 'components/MovieInfo/MovieCard';
 import NavigationLink from 'components/NavigationLink';
 import { List } from './MovieInfo.styled';
@@ -22,5 +23,10 @@ function MovieInfo({ movie, location }) {
     </>
   );
 }
+
+MovieInfo.propTypes = {
+  movie: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+};
 
 export default MovieInfo;

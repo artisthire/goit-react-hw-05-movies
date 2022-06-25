@@ -1,16 +1,14 @@
-import { useEffect, useState } from 'react';
-
+import { useCallback } from 'react';
 import { Outlet, useParams, useLocation, useNavigate } from 'react-router-dom';
-
-import Section from 'components/Section';
-import Button from 'components/Button';
 import { FaLongArrowAltLeft } from 'react-icons/fa';
 
-import MovieInfo from 'components/MovieInfo';
 import { fetchMovieDetails } from 'services/api';
+import useLoader from 'hooks/useLoader';
+import Section from 'components/Section';
+import Button from 'components/Button';
+import MovieInfo from 'components/MovieInfo';
 
 function MovieDetails() {
-  const [movie, setMovie] = useState(null);
   const { movieId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
@@ -19,12 +17,12 @@ function MovieDetails() {
     ? { ...location.state.from }
     : { ...location, pathname: '/' };
 
-  useEffect(() => {
-    (async () => {
-      const movieDetail = await fetchMovieDetails(movieId);
-      setMovie(movieDetail);
-    })();
-  }, [movieId]);
+  const fetch = useCallback(async () => fetchMovieDetails(movieId), [movieId]);
+
+  const { data, isLoaded, Loader } = useLoader({
+    callback: fetch,
+    initData: null,
+  });
 
   function goBack() {
     navigate(prevLocation.pathname, {
@@ -38,7 +36,10 @@ function MovieDetails() {
         <FaLongArrowAltLeft />
         Go back
       </Button>
-      {movie && <MovieInfo movie={movie} location={prevLocation} />}
+
+      {isLoaded && <MovieInfo movie={data} location={prevLocation} />}
+
+      <Loader />
       <Outlet />
     </Section>
   );
