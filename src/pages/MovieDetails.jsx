@@ -14,9 +14,9 @@ import Section from 'components/Section';
 import Button from 'components/Button';
 import MovieInfo from 'components/MovieInfo';
 
-const Cast = lazy(() => import('pages/Cast' /* webpackChunkName: "Cast" */));
+const Cast = lazy(() => import('pages/Cast' /* webpackChunkName: "cast" */));
 const Reviews = lazy(() =>
-  import('pages/Reviews' /* webpackChunkName: "Reviews" */)
+  import('pages/Reviews' /* webpackChunkName: "reviews" */)
 );
 
 function MovieDetails() {
