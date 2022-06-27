@@ -10,9 +10,9 @@ function MovieCard({ movie }) {
     vote_average,
     genres,
   } = movie;
-  const votePercent = vote_average * 10 + '%';
+  const votePercent = Math.trunc(vote_average * 10) + '%';
   const genresString = genres
-    .reduce((sum, current) => [...sum, current.name], [])
+    .reduce((sum, genre) => [...sum, genre.name], [])
     .join(' ');
 
   return (

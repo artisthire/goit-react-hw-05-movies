@@ -1,5 +1,11 @@
-import { useCallback } from 'react';
-import { Outlet, useParams, useLocation, useNavigate } from 'react-router-dom';
+import { lazy, Suspense, useCallback } from 'react';
+import {
+  Routes,
+  Route,
+  useParams,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import { FaLongArrowAltLeft } from 'react-icons/fa';
 
 import { fetchMovieDetails } from 'services/api';
@@ -7,6 +13,11 @@ import useLoader from 'hooks/useLoader';
 import Section from 'components/Section';
 import Button from 'components/Button';
 import MovieInfo from 'components/MovieInfo';
+
+const Cast = lazy(() => import('pages/Cast' /* webpackChunkName: "Cast" */));
+const Reviews = lazy(() =>
+  import('pages/Reviews' /* webpackChunkName: "Reviews" */)
+);
 
 function MovieDetails() {
   const { movieId } = useParams();
@@ -40,7 +51,13 @@ function MovieDetails() {
       {isLoaded && <MovieInfo movie={data} location={prevLocation} />}
 
       <Loader />
-      <Outlet />
+
+      <Suspense fallback={<Section>Loading...</Section>}>
+        <Routes>
+          <Route path="cast" element={<Cast />} />
+          <Route path="reviews" element={<Reviews />} />
+        </Routes>
+      </Suspense>
     </Section>
   );
 }

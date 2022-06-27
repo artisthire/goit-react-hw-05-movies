@@ -4,7 +4,7 @@ import { fetchFilteredMovies, transfromResponse } from 'services/api';
 
 import useLoader from 'hooks/useLoader';
 import Section from 'components/Section';
-import ItemList from 'components/ItemList';
+import ItemList from 'components/LinkList';
 import SearchForm from 'components/SearchForm';
 
 function Movies() {
@@ -20,7 +20,7 @@ function Movies() {
       return [];
     }
 
-    setSearchParams({ query: prevQuery });
+    setSearchParams({ query: prevQuery }, { replace: true });
     return fetchFilteredMovies(prevQuery);
   }, [prevQuery, setSearchParams]);
 
@@ -39,7 +39,7 @@ function Movies() {
       return;
     }
 
-    setSearchParams({ query });
+    setSearchParams({ query }, { replace: true });
   }
 
   return (

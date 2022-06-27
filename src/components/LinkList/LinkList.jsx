@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { List } from './ItemList.styled';
+import { List } from './LinkList.styled';
 
-function ItemList({ items, ...restProps }) {
+function LinkList({ items, ...restProps }) {
   return (
     <List>
       {items.map(item => (
@@ -16,7 +16,7 @@ function ItemList({ items, ...restProps }) {
   );
 }
 
-ItemList.propTypes = {
+LinkList.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.exact({
       key: PropTypes.number.isRequired,
@@ -26,4 +26,4 @@ ItemList.propTypes = {
   ),
 };
 
-export default ItemList;
+export default LinkList;

@@ -2,7 +2,7 @@ import { fetchAllMovies, transfromResponse } from 'services/api';
 
 import useLoader from 'hooks/useLoader';
 import Section from 'components/Section';
-import ItemList from 'components/ItemList';
+import ItemList from 'components/LinkList';
 
 function Home() {
   let { data, isLoaded, Loader } = useLoader({

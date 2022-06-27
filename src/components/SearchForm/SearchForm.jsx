@@ -7,7 +7,7 @@ function SearchForm({ onSubmit, defValue }) {
 
   return (
     <Form onSubmit={onSubmit}>
-      <Label htmlFor={inputId}>Find:</Label>
+      <Label htmlFor={inputId}>Movie name:</Label>
 
       <Input
         id={inputId}
