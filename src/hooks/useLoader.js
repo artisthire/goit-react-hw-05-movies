@@ -18,6 +18,7 @@ function useLoader({ callback, initData }) {
   useEffect(() => {
     (async () => {
       setStatus(STATUS.PENDING);
+
       try {
         const data = await callback();
         setData(data);

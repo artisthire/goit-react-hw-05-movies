@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import { fetchFilteredMovies, transfromResponse } from 'services/api';
+import { fetchFilteredMovies, transformResponse } from 'services/api';
 
 import useLoader from 'hooks/useLoader';
 import Section from 'components/Section';
@@ -29,7 +29,7 @@ function Movies() {
     initData: [],
   });
 
-  data = transfromResponse(data);
+  data = transformResponse(data);
 
   function onSubmit(evt) {
     evt.preventDefault();

@@ -11,9 +11,8 @@ function MovieCard({ movie }) {
     genres,
   } = movie;
   const votePercent = Math.trunc(vote_average * 10) + '%';
-  const genresString = genres
-    .reduce((sum, genre) => [...sum, genre.name], [])
-    .join(' ');
+  const genresString =
+    genres && genres.reduce((sum, genre) => [...sum, genre.name], []).join(' ');
 
   return (
     <Container>
@@ -24,8 +23,12 @@ function MovieCard({ movie }) {
         <Text>User score: {votePercent}</Text>
         <SubTitle>Overview</SubTitle>
         <Text>{overview}</Text>
-        <SubTitle>Genres</SubTitle>
-        <Text>{genresString}</Text>
+        {genresString && (
+          <>
+            <SubTitle>Genres</SubTitle>
+            <Text>{genresString}</Text>
+          </>
+        )}
       </div>
     </Container>
   );
@@ -39,7 +42,7 @@ MovieCard.propTypes = {
     vote_average: PropTypes.number.isRequired,
     genres: PropTypes.arrayOf(
       PropTypes.shape({ name: PropTypes.string.isRequired })
-    ).isRequired,
+    ),
   }),
 };
 

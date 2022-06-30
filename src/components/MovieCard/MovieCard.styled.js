@@ -5,7 +5,6 @@ export const Container = styled.div`
   grid-template-columns: 250px 1fr;
   gap: 10px;
   padding: 15px 0;
-  border-bottom: 1px solid #ccc;
 `;
 
 export const Title = styled.h2`

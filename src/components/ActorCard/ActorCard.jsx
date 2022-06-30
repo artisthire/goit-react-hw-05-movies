@@ -9,7 +9,7 @@ function ActorCard({ actor }) {
       {actor.profile_path && (
         <img src={`${IMG_URL_BASE}/${actor.profile_path}`} alt={actor.name} />
       )}
-      {!actor.profile_path && <img src={noPhotoImg} alt="" />}
+      {!actor.profile_path && <img src={noPhotoImg} alt={actor.name} />}
       <div>
         <p>{actor.name}</p>
         <p>{actor.character}</p>

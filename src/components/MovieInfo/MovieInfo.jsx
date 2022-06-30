@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
-import MovieCard from 'components/MovieInfo/MovieCard';
+import MovieCard from 'components/MovieCard';
 import NavigationLink from 'components/NavigationLink';
-import { List } from './MovieInfo.styled';
+import { List, Subtitle } from './MovieInfo.styled';
 
 function MovieInfo({ movie, location }) {
   return (
     <>
       <MovieCard movie={movie} />
-      <p>Additional information</p>
+      <Subtitle>Additional information</Subtitle>
       <List>
         <li>
           <NavigationLink to="cast" label="Cast" state={{ from: location }} />

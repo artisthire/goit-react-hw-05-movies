@@ -10,55 +10,80 @@ const axiosInstance = axios.create({
 });
 
 export async function fetchAllMovies() {
-  const { data } = await axiosInstance({
-    url: '/trending/movie/day',
-  });
+  try {
+    const { data } = await axiosInstance({
+      url: '/trending/movie/day',
+    });
 
-  return data.results;
+    return data.results;
+  } catch (err) {
+    console.error(err.message);
+    throw err;
+  }
 }
 
 export async function fetchFilteredMovies(query) {
-  const { data } = await axiosInstance({
-    url: '/search/movie',
-    params: {
-      query,
-    },
-  });
+  try {
+    const { data } = await axiosInstance({
+      url: '/search/movie',
+      params: {
+        query,
+      },
+    });
 
-  if (data.results.length === 0) {
-    throw new Error(`Not found for request: "${query}"`);
+    if (data.results.length === 0) {
+      throw new Error(`Not found for request: "${query}"`);
+    }
+
+    return data.results;
+  } catch (err) {
+    console.error(err.message);
+    throw err;
   }
-
-  return data.results;
 }
 
 export async function fetchMovieDetails(moveID) {
-  const { data } = await axiosInstance({
-    url: `/movie/${moveID}`,
-  });
-  return data;
+  try {
+    const { data } = await axiosInstance({
+      url: `/movie/${moveID}`,
+    });
+    return data;
+  } catch (err) {
+    console.error(err.message);
+    throw err;
+  }
 }
 
 export async function fetchMovieCredits(moveID) {
-  const { data } = await axiosInstance({
-    url: `/movie/${moveID}/credits`,
-  });
-  return data.cast.slice(0, 15);
+  try {
+    const { data } = await axiosInstance({
+      url: `/movie/${moveID}/credits`,
+    });
+    return data.cast.slice(0, 15);
+  } catch (err) {
+    console.error(err.message);
+    throw err;
+  }
 }
 
 export async function fetchMovieReviews(moveID) {
-  const { data } = await axiosInstance({
-    url: `/movie/${moveID}/reviews`,
-  });
+  try {
+    const { data } = await axiosInstance({
+      url: `/movie/${moveID}/reviews`,
+    });
 
-  if (data.results.length === 0) {
-    throw new Error('We don`t have any reviews for this movie');
+    if (data.results.length === 0) {
+      throw new Error('We don`t have any reviews for this movie');
+    }
+
+    return data.results;
+  } catch (err) {
+    console.error(err.message);
+    throw err;
   }
-
-  return data.results;
 }
 
-export function transfromResponse(items, baseURL = '') {
+export function transformResponse(items, baseURL = '') {
   return items.map(item => ({
     key: item.id,
     label: item.title,

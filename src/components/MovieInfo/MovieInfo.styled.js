@@ -9,3 +9,9 @@ export const List = styled.ul`
   border-bottom: 1px solid #ccc;
   list-style: none;
 `;
+
+export const Subtitle = styled.p`
+  margin: 0 0 20px 0;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+`;
